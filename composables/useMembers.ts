@@ -48,6 +48,7 @@ export const useMembers = (bucketId: string) => {
     }
   }
 
+<<<<<<< HEAD
   const deleteMember = async (memberId: string) => {
     loading.value = true
     error.value = null
@@ -68,12 +69,18 @@ export const useMembers = (bucketId: string) => {
     }
   }
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
   return {
     members,
     loading,
     error,
     fetchMembers,
+<<<<<<< HEAD
     addMember,
     deleteMember
+=======
+    addMember
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
   }
 }

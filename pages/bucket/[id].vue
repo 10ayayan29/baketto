@@ -9,9 +9,12 @@
           <div class="members-list">
             <span v-for="member in members" :key="member.id" class="member-tag">
               👤 {{ member.name }}
+<<<<<<< HEAD
               <button @click="handleDeleteMember(member.id)" class="btn-remove-member" title="メンバーを削除">
                 ×
               </button>
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
             </span>
           </div>
           <button @click="showAddMemberDialog = true" class="btn-add-member" title="メンバーを追加">
@@ -24,10 +27,13 @@
         ← 戻る
       </NuxtLink>
 
+<<<<<<< HEAD
       <button @click="handleCopyUrl" class="copy-url-button-fixed" :class="{ copied: urlCopied }">
         {{ urlCopied ? '✓ コピー完了' : '🔗 URLをコピー' }}
       </button>
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
       <BucketItemForm
         :members="members"
         @submit="handleAddItem"
@@ -91,7 +97,11 @@ const bucket = ref<any>(null)
 const loading = ref(true)
 
 const { items, fetchItems, addItem, toggleComplete, updateItem, deleteItem } = useBucketItems(bucketId)
+<<<<<<< HEAD
 const { members, fetchMembers, addMember, deleteMember } = useMembers(bucketId)
+=======
+const { members, fetchMembers, addMember } = useMembers(bucketId)
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 
 const isDialogOpen = ref(false)
 const dialogTitle = ref('')
@@ -100,7 +110,10 @@ const dialogUrl = ref<string | null>(null)
 const dialogItemId = ref('')
 
 const showAddMemberDialog = ref(false)
+<<<<<<< HEAD
 const urlCopied = ref(false)
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 
 // 未完了と完了済みに分ける
 const activeItems = computed(() => items.value.filter(item => !item.is_completed))
@@ -170,6 +183,7 @@ const handleAddMember = async (name: string) => {
   }
 }
 
+<<<<<<< HEAD
 // メンバー削除
 const handleDeleteMember = async (memberId: string) => {
   if (confirm('このメンバーを削除しますか？関連する項目は残りますが、メンバー情報が削除されます。')) {
@@ -183,6 +197,8 @@ const handleDeleteMember = async (memberId: string) => {
   }
 }
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 // アイテム削除
 const handleDeleteItem = async (id: string) => {
   if (confirm('この項目を削除しますか？')) {
@@ -191,6 +207,7 @@ const handleDeleteItem = async (id: string) => {
   }
 }
 
+<<<<<<< HEAD
 // URLをコピー
 const handleCopyUrl = async () => {
   try {
@@ -206,6 +223,8 @@ const handleCopyUrl = async () => {
   }
 }
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 // データ再取得（リアルタイム同期用）
 const refreshData = async () => {
   await Promise.all([
@@ -262,6 +281,7 @@ onMounted(async () => {
   }
 }
 
+<<<<<<< HEAD
 .copy-url-button-fixed {
   position: fixed;
   bottom: 2rem;
@@ -294,6 +314,8 @@ onMounted(async () => {
   }
 }
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 h1 {
   color: var(--color-primary);
   font-size: 2rem;
@@ -336,9 +358,13 @@ h1 {
 }
 
 .member-tag {
+<<<<<<< HEAD
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+=======
+  display: inline-block;
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
   padding: 0.25rem 0.75rem;
   background: var(--color-accent);
   color: var(--color-text);
@@ -346,6 +372,7 @@ h1 {
   font-size: 0.9rem;
 }
 
+<<<<<<< HEAD
 .btn-remove-member {
   background: none;
   border: none;
@@ -361,6 +388,8 @@ h1 {
   }
 }
 
+=======
+>>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 .btn-add-member {
   background: var(--color-primary);
   color: white;
