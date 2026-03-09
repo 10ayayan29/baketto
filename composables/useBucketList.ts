@@ -1,6 +1,5 @@
 import type { Bucket } from '~/types'
 
-<<<<<<< HEAD
 const STORAGE_KEY = 'baketto_my_buckets'
 
 // LocalStorageから自分のバケットリストIDを取得
@@ -20,8 +19,6 @@ const saveMyBucketId = (bucketId: string) => {
   }
 }
 
-=======
->>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 export const useBucketList = () => {
   const { supabase } = useSupabase()
 
@@ -33,7 +30,6 @@ export const useBucketList = () => {
     loading.value = true
     error.value = null
     try {
-<<<<<<< HEAD
       // 自分の端末で作成したバケットリストIDを取得
       const myBucketIds = getMyBucketIds()
 
@@ -48,13 +44,6 @@ export const useBucketList = () => {
         .select('*')
         .in('id', myBucketIds)
         .order('created_at', { ascending: false })
-=======
-      const { data, error: fetchError } = await supabase
-        .from('buckets')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(10)
->>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
 
       if (fetchError) throw fetchError
       buckets.value = data || []
@@ -99,16 +88,35 @@ export const useBucketList = () => {
 
       if (membersError) throw membersError
 
-<<<<<<< HEAD
       // LocalStorageに保存（この端末で作成したことを記録）
       saveMyBucketId(bucket.id)
 
-=======
->>>>>>> 8a662116f5c64425cb8cf466e7ed064fa2db0b40
       return bucket
     } catch (e: any) {
       error.value = e.message
       console.error('Error creating bucket:', e)
+      return null
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const updateBucket = async (bucketId: string, title: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      const { data, error: updateError } = await supabase
+        .from('buckets')
+        .update({ title })
+        .eq('id', bucketId)
+        .select()
+        .single()
+
+      if (updateError) throw updateError
+      return data
+    } catch (e: any) {
+      error.value = e.message
+      console.error('Error updating bucket:', e)
       return null
     } finally {
       loading.value = false
@@ -120,6 +128,7 @@ export const useBucketList = () => {
     loading,
     error,
     fetchBuckets,
-    createBucket
+    createBucket,
+    updateBucket
   }
 }
