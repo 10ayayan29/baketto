@@ -35,7 +35,7 @@
         class="btn-icon"
         title="メモ・URLを編集"
       >
-        ℹ️
+        ✏️
       </button>
       <button
         @click="$emit('delete', item.id)"
