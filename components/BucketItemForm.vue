@@ -8,7 +8,7 @@
             v-model="formData.title"
             type="text"
             class="input"
-            placeholder="タイトル"
+            placeholder="リスト"
             required
           />
         </div>
