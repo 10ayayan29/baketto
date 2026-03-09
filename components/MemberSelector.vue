@@ -5,7 +5,7 @@
       class="input"
       @change="handleSelectChange"
     >
-      <option value="">メンバーを選択</option>
+      <option value="">作成者</option>
       <option
         v-for="member in members"
         :key="member.id"

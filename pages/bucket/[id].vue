@@ -324,6 +324,11 @@ h1 {
 
 .items-container {
   margin-top: 2rem;
+  padding-bottom: 8rem;
+
+  @media (max-width: 640px) {
+    padding-bottom: 6rem;
+  }
 }
 
 .active-items {
