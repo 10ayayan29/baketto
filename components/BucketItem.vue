@@ -11,17 +11,21 @@
     />
     <div class="item-main">
       <div class="item-header">
-        <span class="item-title">{{ item.title }}</span>
-        <span v-if="item.member" class="item-member">by {{ item.member.name }}</span>
-        <button
-          v-if="item.memo || item.url"
-          @click="toggleDetails"
-          class="btn-accordion"
-          :class="{ open: isOpen }"
-          :title="isOpen ? '詳細を閉じる' : '詳細を表示'"
-        >
-          ▼
-        </button>
+        <div class="item-title-wrapper">
+          <span class="item-title">{{ item.title }}</span>
+        </div>
+        <div class="item-meta">
+          <span v-if="item.member" class="item-member">by {{ item.member.name }}</span>
+          <button
+            v-if="item.memo || item.url"
+            @click="toggleDetails"
+            class="btn-accordion"
+            :class="{ open: isOpen }"
+            :title="isOpen ? '詳細を閉じる' : '詳細を表示'"
+          >
+            ▼
+          </button>
+        </div>
       </div>
       <Transition name="accordion">
         <div v-if="isOpen && (item.memo || item.url)" class="item-details">
@@ -127,14 +131,32 @@ const toggleDetails = () => {
 
 .item-header {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.item-title-wrapper {
+  flex: 1 1 100%;
+  min-width: 0;
 }
 
 .item-title {
   font-size: 1rem;
   color: var(--color-text);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.item-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .item-member {
@@ -155,7 +177,6 @@ const toggleDetails = () => {
   padding: 0.25rem 0.5rem;
   color: var(--color-text-light);
   transition: transform 0.3s;
-  margin-left: 0.5rem;
 
   &.open {
     transform: rotate(180deg);
