@@ -1,6 +1,7 @@
 export interface Bucket {
   id: string
   title: string
+  memo: string | null
   created_at: string
   updated_at: string
 }

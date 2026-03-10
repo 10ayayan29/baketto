@@ -55,7 +55,7 @@ export const useBucketList = () => {
     }
   }
 
-  const createBucket = async (title: string, memberNames: string[]) => {
+  const createBucket = async (title: string, memberNames: string[], memo?: string) => {
     loading.value = true
     error.value = null
 
@@ -70,7 +70,7 @@ export const useBucketList = () => {
       // バケットリスト作成
       const { data: bucket, error: bucketError } = await supabase
         .from('buckets')
-        .insert({ title })
+        .insert({ title, memo: memo || null })
         .select()
         .single()
 
@@ -101,13 +101,13 @@ export const useBucketList = () => {
     }
   }
 
-  const updateBucket = async (bucketId: string, title: string) => {
+  const updateBucket = async (bucketId: string, title: string, memo?: string) => {
     loading.value = true
     error.value = null
     try {
       const { data, error: updateError } = await supabase
         .from('buckets')
-        .update({ title })
+        .update({ title, memo: memo || null })
         .eq('id', bucketId)
         .select()
         .single()

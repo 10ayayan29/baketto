@@ -14,6 +14,16 @@
           />
         </div>
 
+        <div class="form-group">
+          <label class="form-label">メモ（任意）</label>
+          <textarea
+            v-model="newBucketMemo"
+            class="input textarea"
+            placeholder="このバケットリストについてのメモ"
+            rows="3"
+          ></textarea>
+        </div>
+
         <MemberInput v-model="members" />
 
         <button
@@ -48,6 +58,7 @@ const router = useRouter()
 const { buckets, loading, error, fetchBuckets, createBucket } = useBucketList()
 
 const newBucketTitle = ref('')
+const newBucketMemo = ref('')
 const members = ref<string[]>([])
 
 const canCreate = computed(() => {
@@ -57,7 +68,7 @@ const canCreate = computed(() => {
 const handleCreate = async () => {
   if (!canCreate.value) return
 
-  const bucket = await createBucket(newBucketTitle.value.trim(), members.value)
+  const bucket = await createBucket(newBucketTitle.value.trim(), members.value, newBucketMemo.value.trim() || undefined)
   if (bucket) {
     // 作成成功したら詳細ページへ遷移
     await router.push(`/bucket/${bucket.id}`)
@@ -79,6 +90,12 @@ onMounted(() => {
     margin-bottom: 1.5rem;
     color: var(--color-text);
   }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
 }
 
 .bucket-list {

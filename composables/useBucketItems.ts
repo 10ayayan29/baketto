@@ -126,6 +126,25 @@ export const useBucketItems = (bucketId: string) => {
     return await updateItem(itemId, { is_completed: isCompleted })
   }
 
+  const updateDisplayOrders = async (itemIds: string[]) => {
+    try {
+      // 各アイテムのdisplay_orderを更新
+      const updates = itemIds.map((id, index) =>
+        supabase
+          .from('bucket_items')
+          .update({ display_order: index })
+          .eq('id', id)
+      )
+
+      await Promise.all(updates)
+      return true
+    } catch (e: any) {
+      error.value = e.message
+      console.error('Error updating display orders:', e)
+      return false
+    }
+  }
+
   return {
     items,
     loading,
@@ -134,6 +153,7 @@ export const useBucketItems = (bucketId: string) => {
     addItem,
     updateItem,
     deleteItem,
-    toggleComplete
+    toggleComplete,
+    updateDisplayOrders
   }
 }

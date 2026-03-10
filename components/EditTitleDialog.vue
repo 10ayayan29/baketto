@@ -3,9 +3,10 @@
     <Transition name="modal">
       <div v-if="isOpen" class="modal-overlay" @click="handleClose">
         <div class="modal-content" @click.stop>
-          <h3>タイトルを編集</h3>
+          <h3>バケットリストを編集</h3>
           <form @submit.prevent="handleSave">
             <div class="form-group">
+              <label class="form-label">タイトル</label>
               <input
                 v-model="localTitle"
                 type="text"
@@ -14,6 +15,15 @@
                 required
                 autofocus
               />
+            </div>
+            <div class="form-group">
+              <label class="form-label">メモ（任意）</label>
+              <textarea
+                v-model="localMemo"
+                class="input textarea"
+                placeholder="このバケットリストについてのメモ"
+                rows="3"
+              ></textarea>
             </div>
             <div class="modal-actions">
               <button type="button" @click="handleClose" class="btn btn-secondary">
@@ -34,19 +44,22 @@
 const props = defineProps<{
   isOpen: boolean
   title: string
+  memo: string | null
   bucketId: string
 }>()
 
 const emit = defineEmits<{
   close: []
-  save: [bucketId: string, title: string]
+  save: [bucketId: string, title: string, memo: string]
 }>()
 
 const localTitle = ref('')
+const localMemo = ref('')
 
 watch(() => props.isOpen, (isOpen) => {
   if (isOpen) {
     localTitle.value = props.title
+    localMemo.value = props.memo || ''
   }
 })
 
@@ -56,7 +69,7 @@ const handleClose = () => {
 
 const handleSave = () => {
   if (localTitle.value.trim()) {
-    emit('save', props.bucketId, localTitle.value.trim())
+    emit('save', props.bucketId, localTitle.value.trim(), localMemo.value.trim())
     handleClose()
   }
 }
@@ -94,6 +107,19 @@ const handleSave = () => {
 
 .form-group {
   margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
 }
 
 .modal-actions {

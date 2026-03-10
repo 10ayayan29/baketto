@@ -10,6 +10,9 @@
             ✏️
           </button>
         </div>
+        <div v-if="bucket.memo" class="bucket-memo">
+          {{ bucket.memo }}
+        </div>
         <div v-if="members.length > 0" class="members-section">
           <div class="members-list">
             <span v-for="member in members" :key="member.id" class="member-tag">
@@ -40,14 +43,21 @@
 
       <div class="items-container">
         <div v-if="activeItems.length > 0" class="active-items">
-          <BucketItem
-            v-for="item in activeItems"
-            :key="item.id"
-            :item="item"
-            @toggle-complete="handleToggleComplete"
-            @show-info="handleShowInfo"
-            @delete="handleDeleteItem"
-          />
+          <draggable
+            v-model="draggableActiveItems"
+            item-key="id"
+            @end="handleDragEnd"
+            handle=".drag-handle"
+          >
+            <template #item="{ element }">
+              <BucketItem
+                :item="element"
+                @toggle-complete="handleToggleComplete"
+                @show-info="handleShowInfo"
+                @delete="handleDeleteItem"
+              />
+            </template>
+          </draggable>
         </div>
 
         <div v-else class="empty-state">
@@ -86,15 +96,17 @@
     <EditTitleDialog
       :is-open="showEditTitleDialog"
       :title="bucket?.title || ''"
+      :memo="bucket?.memo || null"
       :bucket-id="bucketId"
       @close="showEditTitleDialog = false"
-      @save="handleSaveTitle"
+      @save="handleSaveBucket"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { BucketItem } from '~/types'
+import draggable from 'vuedraggable'
 
 const route = useRoute()
 const bucketId = route.params.id as string
@@ -103,7 +115,7 @@ const { supabase } = useSupabase()
 const bucket = ref<any>(null)
 const loading = ref(true)
 
-const { items, fetchItems, addItem, toggleComplete, updateItem, deleteItem } = useBucketItems(bucketId)
+const { items, fetchItems, addItem, toggleComplete, updateItem, deleteItem, updateDisplayOrders } = useBucketItems(bucketId)
 const { members, fetchMembers, addMember, deleteMember } = useMembers(bucketId)
 const { updateBucket } = useBucketList()
 
@@ -120,6 +132,16 @@ const urlCopied = ref(false)
 // 未完了と完了済みに分ける
 const activeItems = computed(() => items.value.filter(item => !item.is_completed))
 const completedItems = computed(() => items.value.filter(item => item.is_completed))
+
+// ドラッグ可能なアイテムリスト（双方向バインディング用）
+const draggableActiveItems = computed({
+  get: () => activeItems.value,
+  set: (value) => {
+    // 並び順が変更された時、itemsを更新
+    const completedItemsList = completedItems.value
+    items.value = [...value, ...completedItemsList]
+  }
+})
 
 // バケットリスト情報取得
 const fetchBucket = async () => {
@@ -206,12 +228,18 @@ const handleDeleteItem = async (id: string) => {
   }
 }
 
-// タイトル保存
-const handleSaveTitle = async (bucketId: string, title: string) => {
-  const result = await updateBucket(bucketId, title)
+// バケットリスト保存
+const handleSaveBucket = async (bucketId: string, title: string, memo: string) => {
+  const result = await updateBucket(bucketId, title, memo)
   if (result) {
     await fetchBucket()
   }
+}
+
+// ドラッグ終了時の処理
+const handleDragEnd = async () => {
+  const itemIds = draggableActiveItems.value.map(item => item.id)
+  await updateDisplayOrders(itemIds)
 }
 
 // URLをコピー
@@ -278,6 +306,19 @@ onMounted(async () => {
   &:hover {
     transform: scale(1.1);
   }
+}
+
+.bucket-memo {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-accent);
+  border-radius: var(--border-radius);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .back-button-fixed {

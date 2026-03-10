@@ -1,5 +1,8 @@
 <template>
   <div class="bucket-item" :class="{ completed: item.is_completed }">
+    <div class="drag-handle" title="ドラッグして並び替え">
+      ⋮⋮
+    </div>
     <input
       type="checkbox"
       :checked="item.is_completed"
@@ -88,6 +91,24 @@ const toggleDetails = () => {
       text-decoration: line-through;
       color: var(--color-text-light);
     }
+  }
+}
+
+.drag-handle {
+  cursor: grab;
+  color: var(--color-text-light);
+  font-size: 1.2rem;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+  padding: 0.25rem;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &:hover {
+    color: var(--color-primary);
   }
 }
 
