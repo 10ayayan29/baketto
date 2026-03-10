@@ -320,7 +320,7 @@ onMounted(async () => {
 .bucket-memo {
   margin-top: 0.75rem;
   padding: 0.75rem 1rem;
-  background: var(--color-accent);
+  background: white;
   border-radius: var(--border-radius);
   color: var(--color-text);
   font-size: 0.95rem;
