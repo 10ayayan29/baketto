@@ -5,12 +5,11 @@
     <div v-else-if="bucket">
       <div class="header">
         <div class="title-section">
-          <h1>{{ bucket.title }}</h1>
-          <button @click="showEditTitleDialog = true" class="btn-edit-title" title="タイトルを編集">
-            ✏️
-          </button>
+          <h1 @click="showEditTitleDialog = true" class="clickable-title" title="クリックして編集">
+            {{ bucket.title }}
+          </h1>
         </div>
-        <div v-if="bucket.memo" class="bucket-memo">
+        <div v-if="bucket.memo" @click="showEditTitleDialog = true" class="bucket-memo clickable-memo" title="クリックして編集">
           {{ bucket.memo }}
         </div>
         <div v-if="members.length > 0" class="members-section">
@@ -296,25 +295,7 @@ onMounted(async () => {
 }
 
 .title-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
   margin-bottom: 0.5rem;
-}
-
-.btn-edit-title {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0.25rem;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-
-  &:hover {
-    transform: scale(1.1);
-  }
 }
 
 .bucket-memo {
@@ -328,6 +309,15 @@ onMounted(async () => {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.clickable-memo {
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #FFFAF5;
+  }
 }
 
 .back-button-fixed {
@@ -393,6 +383,19 @@ h1 {
   color: var(--color-primary);
   font-size: 2rem;
   margin: 0;
+}
+
+.clickable-title {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  background: white;
+  display: inline-block;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #FFFAF5;
+  }
 }
 
 .add-item-button-wrapper {
@@ -492,7 +495,7 @@ h1 {
   background: #FFE5CC;
   color: var(--color-text);
   border: none;
-  padding: 0.4rem 1rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.85rem;
