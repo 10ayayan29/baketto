@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#FFF2E0"/>
+
+  <!-- Orange accent circle -->
+  <circle cx="900" cy="150" r="200" fill="#FFB368" opacity="0.3"/>
+  <circle cx="200" cy="500" r="150" fill="#FF6500" opacity="0.2"/>
+
+  <!-- Main content -->
+  <text x="100" y="200" font-size="120" font-weight="bold" fill="#FF6500" font-family="sans-serif">
+    Baketto
+  </text>
+
+  <!-- Emoji -->
+  <text x="100" y="350" font-size="100">
+    📋
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="450" font-size="48" fill="#003467" font-family="sans-serif">
+    やりたいことリスト
+  </text>
+
+  <!-- Description -->
+  <text x="100" y="520" font-size="36" fill="#666" font-family="sans-serif">
+    友達とシェアして一緒に叶えよう
+  </text>
+</svg>

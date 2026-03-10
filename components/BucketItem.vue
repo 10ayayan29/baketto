@@ -14,17 +14,8 @@
         <div class="item-title-wrapper">
           <span class="item-title">{{ item.title }}</span>
         </div>
-        <div class="item-meta">
-          <span v-if="item.member" class="item-member">by {{ item.member.name }}</span>
-          <button
-            v-if="item.memo || item.url"
-            @click="toggleDetails"
-            class="btn-accordion"
-            :class="{ open: isOpen }"
-            :title="isOpen ? '詳細を閉じる' : '詳細を表示'"
-          >
-            ▼
-          </button>
+        <div v-if="item.member" class="item-meta">
+          <span class="item-member">by {{ item.member.name }}</span>
         </div>
       </div>
       <Transition name="accordion">
@@ -37,6 +28,15 @@
       </Transition>
     </div>
     <div class="item-actions">
+      <button
+        v-if="item.memo || item.url"
+        @click="toggleDetails"
+        class="btn-icon btn-accordion"
+        :class="{ open: isOpen }"
+        :title="isOpen ? '詳細を閉じる' : '詳細を表示'"
+      >
+        ▼
+      </button>
       <button
         @click="$emit('showInfo', item)"
         class="btn-icon"
@@ -165,24 +165,6 @@ const toggleDetails = () => {
   color: var(--color-text-light);
 }
 
-.btn-accordion {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  color: var(--color-text-light);
-  transition: transform 0.3s;
-
-  &.open {
-    transform: rotate(180deg);
-  }
-
-  &:hover {
-    color: var(--color-primary);
-  }
-}
-
 .item-details {
   display: flex;
   flex-direction: column;
@@ -232,6 +214,20 @@ const toggleDetails = () => {
 
   &.btn-delete:hover {
     filter: brightness(0.8);
+  }
+
+  &.btn-accordion {
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    &:hover {
+      transform: rotate(0deg) scale(1.1);
+    }
+
+    &.open:hover {
+      transform: rotate(180deg) scale(1.1);
+    }
   }
 }
 

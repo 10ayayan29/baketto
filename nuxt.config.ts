@@ -23,11 +23,24 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Bucket List',
+      title: 'Baketto - やりたいことリスト',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: '共同編集できるバケットリストアプリ' }
+        { name: 'description', content: '友達とシェアできる、シンプルなバケットリストアプリ' },
+        // OGP
+        { property: 'og:title', content: 'Baketto - やりたいことリスト' },
+        { property: 'og:description', content: '友達とシェアできる、シンプルなバケットリストアプリ' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: '/og-image.svg' },
+        // Twitter Card
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Baketto - やりたいことリスト' },
+        { name: 'twitter:description', content: '友達とシェアできる、シンプルなバケットリストアプリ' },
+        { name: 'twitter:image', content: '/og-image.svg' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
       ]
     }
   }
