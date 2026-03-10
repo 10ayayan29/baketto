@@ -36,10 +36,11 @@
         {{ urlCopied ? '✓ コピー完了' : '🔗 URLをコピー' }}
       </button>
 
-      <BucketItemForm
-        :members="members"
-        @submit="handleAddItem"
-      />
+      <div class="add-item-button-wrapper">
+        <button @click="showAddItemDialog = true" class="btn-add-item">
+          + 新しいリストを追加
+        </button>
+      </div>
 
       <div class="items-container">
         <div v-if="activeItems.length > 0" class="active-items">
@@ -61,7 +62,7 @@
         </div>
 
         <div v-else class="empty-state">
-          <p>まだ項目がありません。<br>上のフォームから追加してみましょう！</p>
+          <p>まだ項目がありません。<br>上のボタンから追加してみましょう！</p>
         </div>
 
         <CompletedSection
@@ -101,6 +102,13 @@
       @close="showEditTitleDialog = false"
       @save="handleSaveBucket"
     />
+
+    <AddItemDialog
+      :is-open="showAddItemDialog"
+      :members="members"
+      @close="showAddItemDialog = false"
+      @submit="handleAddItem"
+    />
   </div>
 </template>
 
@@ -127,6 +135,7 @@ const dialogItemId = ref('')
 
 const showAddMemberDialog = ref(false)
 const showEditTitleDialog = ref(false)
+const showAddItemDialog = ref(false)
 const urlCopied = ref(false)
 
 // 未完了と完了済みに分ける
@@ -386,8 +395,35 @@ h1 {
   margin: 0;
 }
 
+.add-item-button-wrapper {
+  margin: 2rem 0 1rem;
+  text-align: center;
+}
+
+.btn-add-item {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(255, 101, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 101, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 .items-container {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding-bottom: 8rem;
 
   @media (max-width: 640px) {
