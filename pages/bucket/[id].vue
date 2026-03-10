@@ -405,7 +405,7 @@ h1 {
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: var(--border-radius);
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -489,17 +489,17 @@ h1 {
 }
 
 .btn-add-member {
-  background: var(--color-primary);
-  color: white;
+  background: #FFE5CC;
+  color: var(--color-text);
   border: none;
   padding: 0.4rem 1rem;
-  border-radius: var(--border-radius);
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: opacity 0.2s;
+  font-size: 0.85rem;
+  transition: background 0.2s;
 
   &:hover {
-    opacity: 0.9;
+    background: #FFD4B3;
   }
 }
 </style>

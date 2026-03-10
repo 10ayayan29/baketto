@@ -217,6 +217,8 @@ const toggleDetails = () => {
   }
 
   &.btn-accordion {
+    color: var(--color-success);
+
     &.open {
       transform: rotate(180deg);
     }
