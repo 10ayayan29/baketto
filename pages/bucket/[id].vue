@@ -466,19 +466,19 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  background: var(--color-accent);
+  padding: 0.2rem 0.6rem;
+  background: #FFE5CC;
   color: var(--color-text);
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .btn-remove-member {
   background: none;
   border: none;
-  color: var(--color-text);
+  color: var(--color-text-light);
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0;
   line-height: 1;
   transition: color 0.2s;
