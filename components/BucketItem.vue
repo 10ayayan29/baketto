@@ -161,12 +161,8 @@ const toggleDetails = () => {
 
 .item-member {
   display: inline-block;
-  padding: 0.25rem 0.75rem;
-  background: var(--color-accent);
-  border-radius: 20px;
   font-size: 0.85rem;
-  color: var(--color-text);
-  font-weight: 500;
+  color: var(--color-text-light);
 }
 
 .btn-accordion {
