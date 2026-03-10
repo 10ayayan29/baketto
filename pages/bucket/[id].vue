@@ -16,7 +16,7 @@
         <div v-if="members.length > 0" class="members-section">
           <div class="members-list">
             <span v-for="member in members" :key="member.id" class="member-tag">
-              👤 {{ member.name }}
+              {{ member.name }}
               <button @click="handleDeleteMember(member.id)" class="btn-remove-member" title="メンバーを削除">
                 ×
               </button>
