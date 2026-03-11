@@ -29,13 +29,15 @@
           <MemberInput v-model="members" />
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary"
-          :disabled="!canCreate || loading"
-        >
-          {{ loading ? '作成中...' : '作成' }}
-        </button>
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            :disabled="!canCreate || loading"
+          >
+            {{ loading ? '作成中...' : '作成' }}
+          </button>
+        </div>
       </form>
 
       <p v-if="error" class="error">{{ error }}</p>
@@ -109,6 +111,11 @@ onMounted(() => {
   resize: vertical;
   min-height: 50px;
   font-family: inherit;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 0.5rem;
 }
 
 .bucket-list {
