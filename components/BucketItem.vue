@@ -23,7 +23,7 @@
           <div v-if="item.url" class="item-url">
             <a :href="item.url" target="_blank" rel="noopener noreferrer">🔗 {{ item.url }}</a>
           </div>
-          <div v-if="item.memo" class="item-memo clickable-memo" @click="$emit('showInfo', item)">{{ item.memo }}</div>
+          <div v-if="item.memo" class="item-memo clickable-memo" @click="handleMemoClick" v-html="formatMemo(item.memo)"></div>
         </div>
       </Transition>
     </div>
@@ -58,11 +58,11 @@
 <script setup lang="ts">
 import type { BucketItem } from '~/types'
 
-defineProps<{
+const props = defineProps<{
   item: BucketItem
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   toggleComplete: [id: string, completed: boolean]
   showInfo: [item: BucketItem]
   delete: [id: string]
@@ -72,6 +72,38 @@ const isOpen = ref(false)
 
 const toggleDetails = () => {
   isOpen.value = !isOpen.value
+}
+
+// メモクリック処理（リンククリック時は編集ダイアログを開かない）
+const handleMemoClick = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  // クリックされた要素がリンクの場合は何もしない
+  if (target.tagName === 'A') {
+    return
+  }
+  emit('showInfo', props.item)
+}
+
+// メモテキストをHTML化（URL自動リンク + 改行対応）
+const formatMemo = (text: string): string => {
+  if (!text) return ''
+
+  // HTMLエスケープ
+  let escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+
+  // URL検出とリンク化
+  const urlPattern = /(https?:\/\/[^\s]+)/g
+  escaped = escaped.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer" class="auto-link">$1</a>')
+
+  // 改行を<br>に変換
+  escaped = escaped.replace(/\n/g, '<br>')
+
+  return escaped
 }
 </script>
 
@@ -186,9 +218,21 @@ const toggleDetails = () => {
   margin: -0.25rem;
   border-radius: 4px;
   transition: background 0.2s;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   &:hover {
     background: rgba(255, 101, 0, 0.1);
+  }
+
+  :deep(.auto-link) {
+    color: var(--color-info);
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 
