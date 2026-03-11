@@ -71,7 +71,10 @@ const isOpen = ref(false)
 }
 
 .accordion-content {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .accordion-enter-active,

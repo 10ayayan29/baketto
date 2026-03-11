@@ -82,9 +82,12 @@ const toggleDetails = () => {
   gap: 1rem;
   padding: 0.75rem;
   background: white;
-  border-radius: var(--border-radius);
-  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
   transition: background 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &:hover {
     background: #FFFAF5;

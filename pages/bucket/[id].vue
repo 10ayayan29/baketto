@@ -478,6 +478,10 @@ h1 {
 
 .active-items {
   margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: white;
 }
 
 .empty-state {
