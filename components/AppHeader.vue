@@ -13,7 +13,7 @@
   z-index: 100;
   background: white;
   border-bottom: 2px solid var(--color-border);
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
