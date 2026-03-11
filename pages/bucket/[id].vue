@@ -422,21 +422,18 @@ onMounted(async () => {
 }
 
 h1 {
-  color: var(--color-primary);
+  color: #333333;
   font-size: 2rem;
   margin: 0;
 }
 
 .clickable-title {
   cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius);
-  background: white;
   display: inline-block;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
 
   &:hover {
-    background: #FFFAF5;
+    opacity: 0.7;
   }
 }
 
