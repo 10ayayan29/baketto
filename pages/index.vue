@@ -47,7 +47,16 @@
       />
     </div>
 
-    <div v-else-if="!loading" class="empty-state">
+    <div v-if="visitedBuckets.length > 0" class="bucket-list visited-list">
+      <h2>最近アクセスしたBaketto</h2>
+      <BucketListCard
+        v-for="bucket in visitedBuckets"
+        :key="bucket.id"
+        :bucket="bucket"
+      />
+    </div>
+
+    <div v-if="buckets.length === 0 && visitedBuckets.length === 0 && !loading" class="empty-state">
       <p>まだバケットリストがありません。<br>上のフォームから作成してみましょう！</p>
     </div>
   </div>
@@ -55,7 +64,7 @@
 
 <script setup lang="ts">
 const router = useRouter()
-const { buckets, loading, error, fetchBuckets, createBucket } = useBucketList()
+const { buckets, visitedBuckets, loading, error, fetchBuckets, fetchVisitedBuckets, createBucket } = useBucketList()
 
 const newBucketTitle = ref('')
 const newBucketMemo = ref('')
@@ -78,6 +87,7 @@ const handleCreate = async () => {
 // 初期データ取得
 onMounted(() => {
   fetchBuckets()
+  fetchVisitedBuckets()
 })
 </script>
 
@@ -103,6 +113,14 @@ onMounted(() => {
     font-size: 1.3rem;
     margin-bottom: 1rem;
     color: var(--color-text);
+  }
+
+  &.visited-list {
+    margin-top: 3rem;
+
+    h2 {
+      color: var(--color-text-light);
+    }
   }
 }
 

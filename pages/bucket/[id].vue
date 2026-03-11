@@ -128,6 +128,9 @@ const { items, fetchItems, addItem, toggleComplete, updateItem, deleteItem, upda
 const { members, fetchMembers, addMember, deleteMember } = useMembers(bucketId)
 const { updateBucket } = useBucketList()
 
+// 訪問履歴保存用の関数をインポート
+const { saveVisitedBucketId } = await import('~/composables/useBucketList')
+
 const isDialogOpen = ref(false)
 const dialogTitle = ref('')
 const dialogMemberName = ref('')
@@ -314,6 +317,10 @@ useRealtimeSync(bucketId, refreshData)
 // 初期データ取得
 onMounted(async () => {
   loading.value = true
+
+  // 訪問履歴に保存
+  saveVisitedBucketId(bucketId)
+
   await Promise.all([
     fetchBucket(),
     fetchItems(),

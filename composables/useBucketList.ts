@@ -1,11 +1,12 @@
 import type { Bucket } from '~/types'
 
-const STORAGE_KEY = 'baketto_my_buckets'
+const STORAGE_KEY_MY = 'baketto_my_buckets'
+const STORAGE_KEY_VISITED = 'baketto_visited_buckets'
 
 // LocalStorageから自分のバケットリストIDを取得
 const getMyBucketIds = (): string[] => {
   if (typeof window === 'undefined') return []
-  const stored = localStorage.getItem(STORAGE_KEY)
+  const stored = localStorage.getItem(STORAGE_KEY_MY)
   return stored ? JSON.parse(stored) : []
 }
 
@@ -15,14 +16,38 @@ const saveMyBucketId = (bucketId: string) => {
   const ids = getMyBucketIds()
   if (!ids.includes(bucketId)) {
     ids.push(bucketId)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+    localStorage.setItem(STORAGE_KEY_MY, JSON.stringify(ids))
   }
+}
+
+// LocalStorageから訪問したバケットリストIDを取得
+const getVisitedBucketIds = (): string[] => {
+  if (typeof window === 'undefined') return []
+  const stored = localStorage.getItem(STORAGE_KEY_VISITED)
+  return stored ? JSON.parse(stored) : []
+}
+
+// LocalStorageに訪問したバケットリストIDを保存
+export const saveVisitedBucketId = (bucketId: string) => {
+  if (typeof window === 'undefined') return
+  const myIds = getMyBucketIds()
+  // 自分が作成したものは訪問履歴に追加しない
+  if (myIds.includes(bucketId)) return
+
+  const ids = getVisitedBucketIds()
+  // 既に存在する場合は削除して最新に移動
+  const filtered = ids.filter(id => id !== bucketId)
+  filtered.unshift(bucketId) // 先頭に追加
+  // 最大20件まで保存
+  const limited = filtered.slice(0, 20)
+  localStorage.setItem(STORAGE_KEY_VISITED, JSON.stringify(limited))
 }
 
 export const useBucketList = () => {
   const { supabase } = useSupabase()
 
   const buckets = ref<Bucket[]>([])
+  const visitedBuckets = ref<Bucket[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
 
@@ -50,6 +75,40 @@ export const useBucketList = () => {
     } catch (e: any) {
       error.value = e.message
       console.error('Error fetching buckets:', e)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const fetchVisitedBuckets = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      // 訪問したバケットリストIDを取得
+      const visitedIds = getVisitedBucketIds()
+
+      if (visitedIds.length === 0) {
+        visitedBuckets.value = []
+        return
+      }
+
+      // 訪問したバケットリストを取得
+      const { data, error: fetchError } = await supabase
+        .from('buckets')
+        .select('*')
+        .in('id', visitedIds)
+
+      if (fetchError) throw fetchError
+
+      // 訪問順（localStorageの順序）に並び替え
+      const orderedData = visitedIds
+        .map(id => data?.find(bucket => bucket.id === id))
+        .filter(bucket => bucket !== undefined) as Bucket[]
+
+      visitedBuckets.value = orderedData
+    } catch (e: any) {
+      error.value = e.message
+      console.error('Error fetching visited buckets:', e)
     } finally {
       loading.value = false
     }
@@ -125,9 +184,11 @@ export const useBucketList = () => {
 
   return {
     buckets,
+    visitedBuckets,
     loading,
     error,
     fetchBuckets,
+    fetchVisitedBuckets,
     createBucket,
     updateBucket
   }
