@@ -50,7 +50,7 @@ const removeMember = (index: number) => {
 
 <style scoped lang="scss">
 .member-input {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .input-group {
