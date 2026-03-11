@@ -9,8 +9,7 @@
             {{ bucket.title }}
           </h1>
         </div>
-        <div v-if="bucket.memo" @click="showEditTitleDialog = true" class="bucket-memo clickable-memo" title="クリックして編集">
-          {{ bucket.memo }}
+        <div v-if="bucket.memo" @click="handleBucketMemoClick" class="bucket-memo clickable-bucket-memo" title="クリックして編集" v-html="formatMemo(bucket.memo)">
         </div>
         <div v-if="members.length > 0" class="members-section">
           <div class="members-list">
@@ -303,6 +302,38 @@ const handleCopyUrl = async () => {
   }
 }
 
+// バケットメモクリック処理（リンククリック時は編集ダイアログを開かない）
+const handleBucketMemoClick = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  // クリックされた要素がリンクの場合は何もしない
+  if (target.tagName === 'A') {
+    return
+  }
+  showEditTitleDialog.value = true
+}
+
+// メモテキストをHTML化（URL自動リンク + 改行対応）
+const formatMemo = (text: string): string => {
+  if (!text) return ''
+
+  // HTMLエスケープ
+  let escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+
+  // URL検出とリンク化
+  const urlPattern = /(https?:\/\/[^\s]+)/g
+  escaped = escaped.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer" class="auto-link">$1</a>')
+
+  // 改行を<br>に変換
+  escaped = escaped.replace(/\n/g, '<br>')
+
+  return escaped
+}
+
 // データ再取得（リアルタイム同期用）
 const refreshData = async () => {
   await Promise.all([
@@ -353,12 +384,24 @@ onMounted(async () => {
   margin-right: auto;
 }
 
-.clickable-memo {
+.clickable-bucket-memo {
   cursor: pointer;
   transition: background 0.2s;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   &:hover {
     background: #FFFAF5;
+  }
+
+  :deep(.auto-link) {
+    color: var(--color-info);
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 
