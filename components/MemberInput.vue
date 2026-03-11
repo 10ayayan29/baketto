@@ -49,10 +49,6 @@ const removeMember = (index: number) => {
 </script>
 
 <style scoped lang="scss">
-.member-input {
-  margin-bottom: 0.75rem;
-}
-
 .input-group {
   display: flex;
   gap: 0.5rem;

@@ -24,7 +24,9 @@
           ></textarea>
         </div>
 
-        <MemberInput v-model="members" />
+        <div class="form-group">
+          <MemberInput v-model="members" />
+        </div>
 
         <button
           type="submit"
