@@ -120,8 +120,7 @@ const toggleDetails = () => {
 }
 
 .checkbox {
-  align-self: flex-start;
-  margin-top: 0;
+  align-self: center;
 }
 
 .item-main {
