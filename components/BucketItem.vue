@@ -23,7 +23,7 @@
           <div v-if="item.url" class="item-url">
             <a :href="item.url" target="_blank" rel="noopener noreferrer">🔗 {{ item.url }}</a>
           </div>
-          <div v-if="item.memo" class="item-memo">{{ item.memo }}</div>
+          <div v-if="item.memo" class="item-memo clickable-memo" @click="$emit('showInfo', item)">{{ item.memo }}</div>
         </div>
       </Transition>
     </div>
@@ -162,7 +162,7 @@ const toggleDetails = () => {
 
 .item-member {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--color-text-light);
 }
 
@@ -178,6 +178,18 @@ const toggleDetails = () => {
   font-size: 0.9rem;
   color: var(--color-text);
   line-height: 1.4;
+}
+
+.clickable-memo {
+  cursor: pointer;
+  padding: 0.25rem;
+  margin: -0.25rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 101, 0, 0.1);
+  }
 }
 
 .item-url {
