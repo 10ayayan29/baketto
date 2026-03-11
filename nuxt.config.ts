@@ -40,7 +40,7 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: '/og-image.svg' }
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
       ]
     }
   }
