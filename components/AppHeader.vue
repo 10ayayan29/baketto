@@ -36,7 +36,7 @@
 
 @media (max-width: 640px) {
   .app-header {
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.5rem;
   }
 
   .logo-image {
