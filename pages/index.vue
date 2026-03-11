@@ -25,6 +25,7 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label">メンバー</label>
           <MemberInput v-model="members" />
         </div>
 

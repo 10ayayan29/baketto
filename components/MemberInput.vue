@@ -1,6 +1,5 @@
 <template>
-  <div class="member-input">
-    <label class="form-label">メンバー</label>
+  <div>
     <div class="input-group">
       <input
         v-model="inputValue"
