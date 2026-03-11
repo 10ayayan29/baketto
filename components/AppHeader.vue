@@ -13,7 +13,7 @@
   z-index: 100;
   background: white;
   border-bottom: 2px solid var(--color-border);
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -30,7 +30,7 @@
 }
 
 .logo-image {
-  height: 40px;
+  height: 32px;
   width: auto;
 }
 
@@ -40,7 +40,7 @@
   }
 
   .logo-image {
-    height: 36px;
+    height: 28px;
   }
 }
 </style>
