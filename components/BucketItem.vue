@@ -165,7 +165,7 @@ const formatMemo = (text: string): string => {
 .item-header {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.25rem;
   align-items: flex-start;
 }
 
