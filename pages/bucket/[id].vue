@@ -80,9 +80,11 @@
     <EditInfoDialog
       :is-open="isDialogOpen"
       :title="dialogTitle"
+      :member-name="dialogMemberName"
       :memo="dialogMemo"
       :url="dialogUrl"
       :item-id="dialogItemId"
+      :members="members"
       @close="isDialogOpen = false"
       @save="handleSaveInfo"
     />
@@ -128,6 +130,7 @@ const { updateBucket } = useBucketList()
 
 const isDialogOpen = ref(false)
 const dialogTitle = ref('')
+const dialogMemberName = ref('')
 const dialogMemo = ref<string | null>(null)
 const dialogUrl = ref<string | null>(null)
 const dialogItemId = ref('')
@@ -189,22 +192,54 @@ const handleToggleComplete = async (id: string, completed: boolean) => {
   await fetchItems()
 }
 
-// メモ・URL表示・編集
+// リスト編集表示
 const handleShowInfo = (item: BucketItem) => {
   dialogItemId.value = item.id
   dialogTitle.value = item.title
+  dialogMemberName.value = item.member?.name || ''
   dialogMemo.value = item.memo
   dialogUrl.value = item.url
   isDialogOpen.value = true
 }
 
-// メモ・URL保存
-const handleSaveInfo = async (itemId: string, memo: string, url: string) => {
+// リスト保存
+const handleSaveInfo = async (itemId: string, title: string, memberName: string, memo: string, url: string) => {
+  // メンバー取得または作成
+  const { data: existingMember } = await supabase
+    .from('members')
+    .select('*')
+    .eq('bucket_id', bucketId)
+    .eq('name', memberName)
+    .single()
+
+  let memberId = existingMember?.id
+
+  if (!existingMember) {
+    const { data: newMember, error: memberError } = await supabase
+      .from('members')
+      .insert({ bucket_id: bucketId, name: memberName })
+      .select()
+      .single()
+
+    if (memberError) {
+      console.error('Error creating member:', memberError)
+      return
+    }
+    memberId = newMember?.id
+  }
+
+  // アイテム更新
   await updateItem(itemId, {
+    title: title,
+    member_id: memberId,
     memo: memo || null,
     url: url || null
   })
-  await fetchItems()
+
+  await Promise.all([
+    fetchItems(),
+    fetchMembers()
+  ])
 }
 
 // メンバー追加

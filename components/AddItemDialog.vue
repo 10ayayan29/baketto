@@ -69,6 +69,8 @@ const emit = defineEmits<{
   submit: [data: { title: string; memberName: string; memo?: string; url?: string }]
 }>()
 
+const STORAGE_KEY = 'baketto_last_member_name'
+
 const formData = reactive({
   title: '',
   memberName: '',
@@ -80,11 +82,26 @@ const canSubmit = computed(() => {
   return formData.title.trim() && formData.memberName.trim()
 })
 
+// localStorage から最後に使った作成者名を読み込む
+const loadLastMemberName = () => {
+  if (process.client) {
+    return localStorage.getItem(STORAGE_KEY) || ''
+  }
+  return ''
+}
+
+// localStorage に作成者名を保存
+const saveLastMemberName = (name: string) => {
+  if (process.client) {
+    localStorage.setItem(STORAGE_KEY, name)
+  }
+}
+
 watch(() => props.isOpen, (isOpen) => {
   if (isOpen) {
     // ダイアログが開いたらフォームをリセット
     formData.title = ''
-    formData.memberName = ''
+    formData.memberName = loadLastMemberName() // 最後に使った作成者名を設定
     formData.memo = ''
     formData.url = ''
   }
@@ -96,9 +113,11 @@ const handleClose = () => {
 
 const handleSubmit = () => {
   if (canSubmit.value) {
+    const memberName = formData.memberName.trim()
+    saveLastMemberName(memberName) // 作成者名を保存
     emit('submit', {
       title: formData.title.trim(),
-      memberName: formData.memberName.trim(),
+      memberName: memberName,
       memo: formData.memo.trim() || undefined,
       url: formData.url.trim() || undefined
     })

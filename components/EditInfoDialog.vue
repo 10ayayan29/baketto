@@ -4,22 +4,31 @@
       <div v-if="isOpen" class="modal-overlay" @click="$emit('close')">
         <div class="modal-content" @click.stop>
           <div class="modal-header">
-            <h3>{{ title }}</h3>
+            <h3>リストを編集</h3>
             <button @click="$emit('close')" class="close-btn">&times;</button>
           </div>
           <form @submit.prevent="handleSubmit" class="modal-body">
             <div class="form-group">
-              <label class="form-label">メモ</label>
-              <textarea
-                v-model="localMemo"
-                class="input textarea"
-                placeholder="メモを入力..."
-                rows="4"
-              ></textarea>
+              <label class="form-label">リスト</label>
+              <input
+                v-model="localTitle"
+                type="text"
+                class="input"
+                placeholder="リストのタイトル"
+                required
+              />
             </div>
 
             <div class="form-group">
-              <label class="form-label">🔗 URL</label>
+              <label class="form-label">作成者</label>
+              <MemberSelector
+                v-model="localMemberName"
+                :members="members"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">URL（任意）</label>
               <input
                 v-model="localUrl"
                 type="url"
@@ -28,11 +37,21 @@
               />
             </div>
 
+            <div class="form-group">
+              <label class="form-label">メモ（任意）</label>
+              <textarea
+                v-model="localMemo"
+                class="input textarea"
+                placeholder="メモを入力..."
+                rows="4"
+              ></textarea>
+            </div>
+
             <div class="form-actions">
               <button type="button" @click="$emit('close')" class="btn btn-secondary">
                 キャンセル
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" :disabled="!canSubmit">
                 保存
               </button>
             </div>
@@ -44,23 +63,41 @@
 </template>
 
 <script setup lang="ts">
+import type { Member } from '~/types'
+
 const props = defineProps<{
   isOpen: boolean
   title: string
+  memberName: string
   memo: string | null
   url: string | null
   itemId: string
+  members: Member[]
 }>()
 
 const emit = defineEmits<{
   close: []
-  save: [itemId: string, memo: string, url: string]
+  save: [itemId: string, title: string, memberName: string, memo: string, url: string]
 }>()
 
+const localTitle = ref(props.title || '')
+const localMemberName = ref(props.memberName || '')
 const localMemo = ref(props.memo || '')
 const localUrl = ref(props.url || '')
 
+const canSubmit = computed(() => {
+  return localTitle.value.trim() && localMemberName.value.trim()
+})
+
 // propsが変更されたらローカルの値も更新
+watch(() => props.title, (newTitle) => {
+  localTitle.value = newTitle || ''
+})
+
+watch(() => props.memberName, (newMemberName) => {
+  localMemberName.value = newMemberName || ''
+})
+
 watch(() => props.memo, (newMemo) => {
   localMemo.value = newMemo || ''
 })
@@ -70,8 +107,10 @@ watch(() => props.url, (newUrl) => {
 })
 
 const handleSubmit = () => {
-  emit('save', props.itemId, localMemo.value, localUrl.value)
-  emit('close')
+  if (canSubmit.value) {
+    emit('save', props.itemId, localTitle.value.trim(), localMemberName.value.trim(), localMemo.value, localUrl.value)
+    emit('close')
+  }
 }
 </script>
 

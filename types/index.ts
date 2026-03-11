@@ -37,6 +37,7 @@ export interface CreateBucketItemInput {
 
 export interface UpdateBucketItemInput {
   title?: string
+  member_id?: string
   memo?: string
   url?: string
   is_completed?: boolean
