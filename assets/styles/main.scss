@@ -36,7 +36,7 @@ body {
   background: white;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  padding: 1.5rem;
+  padding: 1.25rem;
   margin-bottom: 1rem;
 }
 
@@ -80,7 +80,7 @@ body {
 
 .input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   font-size: 1rem;
@@ -98,13 +98,13 @@ body {
 
 .textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   font-size: 1rem;
   font-family: inherit;
   resize: vertical;
-  min-height: 80px;
+  min-height: 60px;
 
   &:focus {
     outline: none;
@@ -117,7 +117,7 @@ body {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .form-label {

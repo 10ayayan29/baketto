@@ -93,18 +93,18 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .create-form {
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 
   h2 {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--color-text);
   }
 }
 
 .textarea {
   resize: vertical;
-  min-height: 60px;
+  min-height: 50px;
   font-family: inherit;
 }
 

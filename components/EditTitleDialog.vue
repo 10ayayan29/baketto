@@ -92,7 +92,7 @@ const handleSave = () => {
 
 .modal-content {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: var(--border-radius);
   max-width: 500px;
   width: 100%;
@@ -100,25 +100,25 @@ const handleSave = () => {
 
   h3 {
     margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--color-text);
   }
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 500;
   color: var(--color-text);
 }
 
 .textarea {
   resize: vertical;
-  min-height: 60px;
+  min-height: 50px;
   font-family: inherit;
 }
 

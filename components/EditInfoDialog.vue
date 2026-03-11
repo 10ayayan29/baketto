@@ -141,7 +141,7 @@ const handleSubmit = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-bottom: 1px solid var(--color-border);
 
   h3 {
@@ -171,15 +171,15 @@ const handleSubmit = () => {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 70px;
   font-family: inherit;
 }
 
