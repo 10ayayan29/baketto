@@ -1,8 +1,7 @@
 <template>
   <header class="app-header">
     <NuxtLink to="/" class="logo-link">
-      <div class="logo">B</div>
-      <span class="app-name">Baketto</span>
+      <img src="/assets/img/logo_clear.png" alt="Baketto" class="logo-image" />
     </NuxtLink>
   </header>
 </template>
@@ -21,7 +20,6 @@
 .logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   text-decoration: none;
   width: fit-content;
   transition: opacity 0.2s;
@@ -31,25 +29,9 @@
   }
 }
 
-.logo {
-  width: 40px;
+.logo-image {
   height: 40px;
-  background: var(--color-primary);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 8px;
-  font-family: 'Arial', sans-serif;
-}
-
-.app-name {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  letter-spacing: 0.5px;
+  width: auto;
 }
 
 @media (max-width: 640px) {
@@ -57,14 +39,8 @@
     padding: 0.75rem 1rem;
   }
 
-  .logo {
-    width: 36px;
+  .logo-image {
     height: 36px;
-    font-size: 1.3rem;
-  }
-
-  .app-name {
-    font-size: 1.3rem;
   }
 }
 </style>
