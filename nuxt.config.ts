@@ -32,12 +32,12 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Baketto - やりたいことリスト' },
         { property: 'og:description', content: '友達とシェアできる、シンプルなバケットリストアプリ' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: '/og-image.svg' },
+        { property: 'og:image', content: '/og-image.png' },
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Baketto - やりたいことリスト' },
         { name: 'twitter:description', content: '友達とシェアできる、シンプルなバケットリストアプリ' },
-        { name: 'twitter:image', content: '/og-image.svg' }
+        { name: 'twitter:image', content: '/og-image.png' }
       ],
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' }
