@@ -44,7 +44,7 @@
     </div>
 
     <div v-if="buckets.length > 0" class="bucket-list">
-      <h2>Your Baketto</h2>
+      <h2>作成したリスト</h2>
       <BucketListCard
         v-for="bucket in buckets"
         :key="bucket.id"
@@ -53,7 +53,7 @@
     </div>
 
     <div v-if="visitedBuckets.length > 0" class="bucket-list visited-list">
-      <h2>最近アクセスしたBaketto</h2>
+      <h2>最近アクセスしたリスト</h2>
       <BucketListCard
         v-for="bucket in visitedBuckets"
         :key="bucket.id"
