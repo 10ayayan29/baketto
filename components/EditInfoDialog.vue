@@ -89,21 +89,14 @@ const canSubmit = computed(() => {
   return localTitle.value.trim() && localMemberName.value.trim()
 })
 
-// propsが変更されたらローカルの値も更新
-watch(() => props.title, (newTitle) => {
-  localTitle.value = newTitle || ''
-})
-
-watch(() => props.memberName, (newMemberName) => {
-  localMemberName.value = newMemberName || ''
-})
-
-watch(() => props.memo, (newMemo) => {
-  localMemo.value = newMemo || ''
-})
-
-watch(() => props.url, (newUrl) => {
-  localUrl.value = newUrl || ''
+// ダイアログが開いたときにpropsの値でリセット
+watch(() => props.isOpen, (isOpen) => {
+  if (isOpen) {
+    localTitle.value = props.title || ''
+    localMemberName.value = props.memberName || ''
+    localMemo.value = props.memo || ''
+    localUrl.value = props.url || ''
+  }
 })
 
 const handleSubmit = () => {
