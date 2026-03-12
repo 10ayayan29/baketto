@@ -23,19 +23,19 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Buketto - シェアして一緒に叶えるバケットリスト',
+      title: 'Baketto - シェアして一緒に叶えるバケットリスト',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'シェアして一緒に叶えるバケットリスト' },
         // OGP
-        { property: 'og:title', content: 'Buketto - シェアして一緒に叶えるバケットリスト' },
+        { property: 'og:title', content: 'Baketto - シェアして一緒に叶えるバケットリスト' },
         { property: 'og:description', content: 'シェアして一緒に叶えるバケットリスト' },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.png' },
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Buketto - シェアして一緒に叶えるバケットリスト' },
+        { name: 'twitter:title', content: 'Baketto - シェアして一緒に叶えるバケットリスト' },
         { name: 'twitter:description', content: 'シェアして一緒に叶えるバケットリスト' },
         { name: 'twitter:image', content: '/og-image.png' }
       ],

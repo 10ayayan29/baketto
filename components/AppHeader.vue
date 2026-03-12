@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <NuxtLink to="/" class="logo-link">
-      <img src="/assets/img/logo_clear.png" alt="Buketto" class="logo-image" />
+      <img src="/assets/img/logo_clear.png" alt="Baketto" class="logo-image" />
     </NuxtLink>
   </header>
 </template>
