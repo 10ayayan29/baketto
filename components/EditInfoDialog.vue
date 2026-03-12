@@ -48,12 +48,17 @@
             </div>
 
             <div class="form-actions">
-              <button type="button" @click="$emit('close')" class="btn btn-secondary">
-                キャンセル
+              <button type="button" @click="handleDelete" class="btn btn-danger">
+                削除
               </button>
-              <button type="submit" class="btn btn-primary" :disabled="!canSubmit">
-                保存
-              </button>
+              <div class="form-actions-right">
+                <button type="button" @click="$emit('close')" class="btn btn-secondary">
+                  キャンセル
+                </button>
+                <button type="submit" class="btn btn-primary" :disabled="!canSubmit">
+                  保存
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -78,6 +83,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
   save: [itemId: string, title: string, memberName: string, memo: string, url: string]
+  delete: [itemId: string]
 }>()
 
 const localTitle = ref(props.title || '')
@@ -102,6 +108,13 @@ watch(() => props.isOpen, (isOpen) => {
 const handleSubmit = () => {
   if (canSubmit.value) {
     emit('save', props.itemId, localTitle.value.trim(), localMemberName.value.trim(), localMemo.value, localUrl.value)
+    emit('close')
+  }
+}
+
+const handleDelete = () => {
+  if (confirm('この項目を削除しますか？')) {
+    emit('delete', props.itemId)
     emit('close')
   }
 }
@@ -179,8 +192,13 @@ const handleSubmit = () => {
 .form-actions {
   display: flex;
   gap: 0.75rem;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 0.5rem;
+}
+
+.form-actions-right {
+  display: flex;
+  gap: 0.75rem;
 }
 
 .btn-secondary {
@@ -189,6 +207,22 @@ const handleSubmit = () => {
 
   &:hover {
     background: #F5E8D8;
+  }
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #c82333;
   }
 }
 

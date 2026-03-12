@@ -12,7 +12,6 @@
           :item="item"
           @toggle-complete="(id, completed) => $emit('toggleComplete', id, completed)"
           @show-info="$emit('showInfo', $event)"
-          @delete="$emit('delete', $event)"
         />
       </div>
     </Transition>
@@ -29,7 +28,6 @@ defineProps<{
 defineEmits<{
   toggleComplete: [id: string, completed: boolean]
   showInfo: [item: BucketItem]
-  delete: [id: string]
 }>()
 
 const isOpen = ref(false)

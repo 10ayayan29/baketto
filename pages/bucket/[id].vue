@@ -53,7 +53,6 @@
                 :item="element"
                 @toggle-complete="handleToggleComplete"
                 @show-info="handleShowInfo"
-                @delete="handleDeleteItem"
               />
             </template>
           </draggable>
@@ -67,7 +66,6 @@
           :items="completedItems"
           @toggle-complete="handleToggleComplete"
           @show-info="handleShowInfo"
-          @delete="handleDeleteItem"
         />
       </div>
     </div>
@@ -86,6 +84,7 @@
       :members="members"
       @close="isDialogOpen = false"
       @save="handleSaveInfo"
+      @delete="handleDeleteItem"
     />
 
     <AddMemberDialog

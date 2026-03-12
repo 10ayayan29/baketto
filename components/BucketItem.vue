@@ -44,13 +44,6 @@
       >
         ✏️
       </button>
-      <button
-        @click="$emit('delete', item.id)"
-        class="btn-icon btn-delete"
-        title="削除"
-      >
-        🗑️
-      </button>
     </div>
   </div>
 </template>
@@ -65,7 +58,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   toggleComplete: [id: string, completed: boolean]
   showInfo: [item: BucketItem]
-  delete: [id: string]
 }>()
 
 const isOpen = ref(false)
